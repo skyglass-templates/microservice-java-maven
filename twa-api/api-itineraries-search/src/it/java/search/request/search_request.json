@@ -1,0 +1,9 @@
+{
+  "from": "BUE,MIA",
+  "to": "MIA,BUE",
+  "departure": "2022-03-29,2022-04-03",
+  "adults": 1,
+  "children": 1,
+  "infants": 1,
+  "amount": 10
+}

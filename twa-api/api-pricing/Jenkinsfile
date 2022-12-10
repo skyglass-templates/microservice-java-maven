@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven 3.3.3'
+    }
+    stages {
+
+            stage('Compile') {
+                steps {
+                    dir('api-pricing') {
+                        sh 'mvn clean compile'
+                    }
+                }
+
+            } 
+            stage('Test') {
+                steps {
+                    dir('api-pricing') {
+                        sh 'mvn test'
+                    }
+                }
+            }
+            stage('Quality') {
+                steps {
+                    dir('api-pricing') {
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=api_pricing -Dsonar.host.url=http://sonar:9000 -Dsonar.login=c35e593688f22c115d459c2ffa1a8c37576f10ab'
+                    }
+                }
+            }
+            stage('Package') {
+                steps {
+                    dir('api-pricing') {
+                        sh 'mvn -B -DskipTests package'
+                    }
+                }
+            }
+    }
+}

@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.twa.flights.common</groupId>
+		<artifactId>flights-parent</artifactId>
+		<version>1.0.5</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>com.twa.flights</groupId>
+	<artifactId>api-itineraries-search</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>api-itineraries-search</name>
+	<description>Ingress point for do search</description>
+
+	<developers>
+		<developer>
+			<email>sacco.andres@gmail.com</email>
+			<name>Andres Sacco</name>
+			<id>sacco.andres</id>
+		</developer>
+	</developers>
+
+	<properties>
+		<application.name>api-itineraries-search</application.name>
+		<application.mainClass>com.twa.flights.api.itineraries.search.App</application.mainClass>
+
+		<!-- Spring -->
+		<spring-boot.version>2.4.10</spring-boot.version>
+
+		<!-- General -->
+		<orika-core.version>1.5.4</orika-core.version>
+		<springdoc-openapi-ui.version>1.5.8</springdoc-openapi-ui.version>
+		<guava.version>30.1.1-jre</guava.version>
+        <scala-library.version>2.13.0</scala-library.version>
+        <scala-reflect.version>2.13.4</scala-reflect.version>
+        <typesafe-config.version>1.4.0</typesafe-config.version>
+        <error_prone_annotations.version>2.5.1</error_prone_annotations.version>
+
+        <!-- TWA -->
+		<flights-common-dto.version>1.0.4</flights-common-dto.version>
+
+        <!--Tests-->
+        <karate.version>1.1.0</karate.version>
+
+		<!-- Maven plugins -->
+		<spring-boot-maven-plugin.version>2.4.10</spring-boot-maven-plugin.version>
+        <wiremock-maven-plugin.version>4.4.0</wiremock-maven-plugin.version>
+        <gatling-maven-plugin.version>3.1.0</gatling-maven-plugin.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala-library.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-reflect</artifactId>
+                <version>${scala-reflect.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>${typesafe-config.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_annotations</artifactId>
+                <version>${error_prone_annotations.version}</version>
+            </dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+		<!-- General -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>${orika-core.version}</version>
+		</dependency>
+
+		<!-- TWA -->
+		<dependency>
+			<groupId>com.twa.flights.common</groupId>
+			<artifactId>flights-common-dto</artifactId>
+			<version>${flights-common-dto.version}</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.ow2.asm</groupId>
+					<artifactId>asm</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-gatling</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-test-resource</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/conf/integration</directory>
+                                </resource>
+                                <resource>
+                                    <directory>src/it/java</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/it/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+	</build>
+
+    <profiles>
+        <profile>
+            <id>PK</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot-maven-plugin.version}</version>
+                        <configuration>
+                            <mainClass>com.twa.flights.api.itineraries.search.App</mainClass>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>QC</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <additionalClasspathElements>
+                                <additionalClasspathElement>${project.basedir}/src/conf/integration</additionalClasspathElement>
+                            </additionalClasspathElements>
+                            <systemPropertyVariables>
+                                <integration-wiremock.url>localhost:${integration-wiremock.port}</integration-wiremock.url>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>${build-helper-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>reserve-network-port</id>
+                                <goals>
+                                    <goal>reserve-network-port</goal>
+                                </goals>
+                                <phase>process-resources</phase>
+                                <configuration>
+                                    <portNames>
+                                        <portName>integration-wiremock.port</portName>
+                                    </portNames>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>uk.co.automatictester</groupId>
+                        <artifactId>wiremock-maven-plugin</artifactId>
+                        <version>${wiremock-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>start-wiremock</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <dir>${project.basedir}/src/conf/integration/wiremock</dir>
+                                    <params>--port=${integration-wiremock.port} --global-response-templating</params>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>stop-wiremock</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>PT</id>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>${build-helper-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>reserve-network-port</id>
+                                <goals>
+                                    <goal>reserve-network-port</goal>
+                                </goals>
+                                <phase>process-resources</phase>
+                                <configuration>
+                                    <portNames>
+                                        <portName>integration-wiremock.port</portName>
+                                        <portName>random.jmx.port</portName>
+                                    </portNames>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>uk.co.automatictester</groupId>
+                        <artifactId>wiremock-maven-plugin</artifactId>
+                        <version>${wiremock-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>start-wiremock</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <dir>${project.basedir}/src/conf/integration/wiremock</dir>
+                                    <params>--port=${integration-wiremock.port} --global-response-templating</params>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>stop-wiremock</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.gatling</groupId>
+                        <artifactId>gatling-maven-plugin</artifactId>
+                        <version>${gatling-maven-plugin.version}</version>
+                        <configuration>
+                            <simulationsFolder>src/it/java</simulationsFolder>
+                            <runMultipleSimulations>true</runMultipleSimulations>
+                            <includes>
+                                <include>performance.*</include>
+                            </includes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot.version}</version>
+                        <configuration>
+                            <wait>1000</wait>
+                            <maxAttempts>180</maxAttempts>
+                            <jmxPort>${random.jmx.port}</jmxPort>
+                            <folders>
+                                <folder>
+                                    ${project.basedir}/src/conf/integration
+                                </folder>
+                            </folders>
+                            <arguments>
+                                <argument>--integration-wiremock.url=localhost:${integration-wiremock.port}</argument>
+                            </arguments>
+
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>start-app</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-app</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+	<repositories>
+		<repository>
+			<id>manning-twa-lib-parent</id>
+			<name>Repository of custom objects</name>
+			<url>https://mymavenrepo.com/repo/tJqfV65wRD0LL9UcK4CQ</url>
+		</repository>
+		<repository>
+			<id>maven2</id>
+			<name>maven2</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository> 
+	</repositories>
+</project>
